@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/nhat104/nodejs_udemy#readme",
   "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
     "nodemon": "^2.0.16"
   }
 }
