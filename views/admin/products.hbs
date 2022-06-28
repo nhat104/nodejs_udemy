@@ -14,7 +14,10 @@
             <p class='product__description'>${{this.desc}}</p>
           </div>
           <div class='card__actions'>
-            <button class='btn'>Add to Cart</button>
+            {{! <a class='btn' href="/admin/edit-product">Edit</button> }}
+            <form action='/admin/delete-product' method='POST'>
+              <button class='btn' type='submit'>Delete</button>
+            </form>
           </div>
         </article>
       {{/each}}

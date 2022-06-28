@@ -14,7 +14,19 @@
         <ul class='main-header__item-list'>
           <li class='main-header__item'><a class="{{#if activeShop}}active{{/if}}" href='/'>Shop</a></li>
           <li class='main-header__item'>
-            <a class="{{#if activeAddProduct}}active{{/if}}" href='/add-product'>Add Product</a>
+            <a class="{{#if activeProducts}}active{{/if}}" href='/products'>Products</a>
+          </li>
+          <li class='main-header__item'>
+            <a class="{{#if activeCart}}active{{/if}}" href='/cart'>Cart</a>
+          </li>
+          <li class='main-header__item'>
+            <a class="{{#if activeOrder}}active{{/if}}" href='/order'>Order</a>
+          </li>
+          <li class='main-header__item'>
+            <a class="{{#if activeAdminProducts}}active{{/if}}" href='/admin/products'>Admin Products</a>
+          </li>
+          <li class='main-header__item'>
+            <a class="{{#if activeAddProduct}}active{{/if}}" href='/admin/add-product'>Add Product</a>
           </li>
         </ul>
       </nav>
