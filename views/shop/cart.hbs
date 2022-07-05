@@ -1,0 +1,19 @@
+<main>
+  {{#if hasProduct}}
+    <ul>
+      {{#each products}}
+        <li>
+          <p>{{title}} ({{quantity}})</p>
+          <form action='/cart-delete-item' method='post'>
+            <input type='hidden' name='productId' value='{{id}}' />
+            <button type='submit' class='btn'>Delete</button>
+          </form>
+        </li>
+      {{/each}}
+
+    </ul>
+
+  {{else}}
+    <h1>No Product In Cart</h1>
+  {{/if}}
+</main>

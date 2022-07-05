@@ -1,3 +1,4 @@
+const Cart = require('../models/cart');
 const Product = require('../models/products');
 
 exports.getIndex = (_, res) => {
@@ -9,6 +10,13 @@ exports.getIndex = (_, res) => {
       activeShop: true,
     })
   );
+};
+
+exports.getProduct = (req, res) => {
+  const productId = req.params.productId;
+  Product.findById(productId, (product) => {
+    res.render('shop/product-detail', { product, docTitle: product.title, activeProducts: true });
+  });
 };
 
 exports.getProducts = (_, res) => {
@@ -23,9 +31,38 @@ exports.getProducts = (_, res) => {
 };
 
 exports.getCart = (_, res) => {
-  res.render('shop/cart', {
-    docTitle: 'Your Cart',
-    activeCart: true,
+  Cart.getCart((cart) => {
+    Product.fetchAll((products) => {
+      const cartProduct = [];
+      products.forEach((product) => {
+        const cartProductData = cart.products.find((prod) => prod.id === product.id);
+        if (cartProductData) {
+          cartProduct.push({ ...product, quantity: cartProductData.quantity });
+        }
+      });
+      res.render('shop/cart', {
+        docTitle: 'Your Cart',
+        activeCart: true,
+        products: cartProduct,
+        hasProduct: cartProduct.length,
+      });
+    });
+  });
+};
+
+exports.postCart = (req, res) => {
+  const productId = req.body.productId;
+  Product.findById(productId, (product) => {
+    Cart.addProduct(productId, product.price);
+  });
+  res.redirect('/');
+};
+
+exports.postCartDeleteProduct = (req, res) => {
+  const productId = req.body.productId;
+  Product.findById(productId, (product) => {
+    Cart.deleteProduct(productId, product.price);
+    res.redirect('/cart');
   });
 };
 
