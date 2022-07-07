@@ -2,32 +2,38 @@ const Cart = require('../models/cart');
 const Product = require('../models/products');
 
 exports.getIndex = (_, res) => {
-  Product.fetchAll((products) =>
-    res.render('shop/index', {
-      products,
-      docTitle: 'Shop',
-      hasProduct: products.length > 0,
-      activeShop: true,
+  Product.fetchAll()
+    .then(([rows]) => {
+      res.render('shop/index', {
+        products: rows,
+        docTitle: 'Shop',
+        hasProduct: rows.length > 0,
+        activeShop: true,
+      });
     })
-  );
+    .catch((err) => console.log(err));
 };
 
 exports.getProduct = (req, res) => {
   const productId = req.params.productId;
-  Product.findById(productId, (product) => {
-    res.render('shop/product-detail', { product, docTitle: product.title, activeProducts: true });
-  });
+  Product.findById(productId)
+    .then(([[product]]) => {
+      res.render('shop/product-detail', { product, docTitle: product.title, activeProducts: true });
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.getProducts = (_, res) => {
-  Product.fetchAll((products) =>
-    res.render('shop/product-list', {
-      products,
-      docTitle: 'Products',
-      hasProduct: products.length > 0,
-      activeProducts: true,
+  Product.fetchAll()
+    .then(([rows]) => {
+      res.render('shop/product-list', {
+        products: rows,
+        docTitle: 'Products',
+        hasProduct: rows.length > 0,
+        activeProducts: true,
+      });
     })
-  );
+    .catch((err) => console.log(err));
 };
 
 exports.getCart = (_, res) => {
