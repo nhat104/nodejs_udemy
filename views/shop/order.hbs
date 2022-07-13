@@ -1,1 +1,21 @@
-<main><h1>Nothing there!</h1></main>
+<main>
+  {{#if hasOrder}}
+    <ul>
+      {{#each orders}}
+        <li>
+          <h1>{{id}}</h1>
+          <ul>
+            {{#each products}}
+              <li>
+                {{dataValues.title}}
+                ({{dataValues.orderItem.dataValues.quantity}})
+              </li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <h1>Nothing there!</h1>
+  {{/if}}
+</main>
