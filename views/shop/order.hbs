@@ -3,12 +3,12 @@
     <ul>
       {{#each orders}}
         <li>
-          <h1>{{id}}</h1>
+          <h1>{{_id}}</h1>
           <ul>
-            {{#each products}}
+            {{#each items}}
               <li>
-                {{dataValues.title}}
-                ({{dataValues.orderItem.dataValues.quantity}})
+                {{title}}
+                ({{quantity}})
               </li>
             {{/each}}
           </ul>

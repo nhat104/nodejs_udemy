@@ -14,7 +14,7 @@ const routeHandler = (req, res) => {
         <p>Hieu ngu vcl</p>
         
         <form action="/create-user" method="POST">
-          <input type="text" name="username" />
+          <input type="text" name="name" />
           <button type="submit">Create</button>
         </form>
       </body>
@@ -48,8 +48,8 @@ const routeHandler = (req, res) => {
     });
     return req.on('end', () => {
       const parsedBody = Buffer.concat(body).toString();
-      const username = parsedBody.split('=')[1];
-      console.log('parsedBody', username);
+      const name = parsedBody.split('=')[1];
+      console.log('parsedBody', name);
       return res.end();
     });
   }
