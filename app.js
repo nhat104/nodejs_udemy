@@ -2,9 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const hbs = require('express-handlebars');
+const mongoose = require('mongoose');
 
 const errorController = require('./controllers/error');
-const { mongoConnect } = require('./utils/database');
+const User = require('./models/user');
 
 const app = express();
 
@@ -14,15 +15,14 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-const User = require('./models/user');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, _, next) => {
-  User.findById('62e3ed9e200add6954dc1920')
+  User.findById('62eeac03087f1071dd6fb519')
     .then((user) => {
-      req.user = new User(user.name, user.email, user.cart, user._id);
+      req.user = user;
       next();
     })
     .catch((err) => console.log(err));
@@ -33,6 +33,8 @@ app.use(shopRoutes);
 
 app.use(errorController.getError);
 
-mongoConnect(() => {
-  app.listen(8080);
-});
+mongoose
+  .connect(
+    'mongodb+srv://nhat1042001:nhat1042001@swlprime.c7x3a.mongodb.net/shop?retryWrites=true&w=majority'
+  )
+  .then(() => app.listen(8080));
