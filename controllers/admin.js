@@ -5,16 +5,23 @@ exports.getAddProduct = (req, res) => {
     docTitle: 'Add Product',
     path: '/admin/add-product',
     activeAddProduct: true,
+    isLoggedIn: req.user,
   });
 };
 
 exports.postAddProduct = (req, res) => {
   const { title, imageUrl, desc, price } = req.body;
-  const product = new Product({ title, price, desc, imageUrl, userId: req.user._id });
+  const product = new Product({
+    title,
+    price,
+    desc,
+    imageUrl,
+    userId: req.user._id,
+  });
   product.save().then(() => res.redirect('/admin/products'));
 };
 
-exports.getProducts = (_, res) => {
+exports.getProducts = (req, res) => {
   Product.find()
     .lean()
     .then((products) => {
@@ -23,6 +30,7 @@ exports.getProducts = (_, res) => {
         docTitle: 'Admin Products',
         hasProduct: products.length > 0,
         activeAdminProducts: true,
+        isLoggedIn: req.user,
       });
     });
 };
@@ -41,6 +49,7 @@ exports.getEditProduct = (req, res) => {
         path: '/admin/edit-product',
         activeEditProduct: true,
         editing: true,
+        isLoggedIn: req.user,
       });
     });
 };

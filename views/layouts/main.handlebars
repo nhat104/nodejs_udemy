@@ -8,6 +8,7 @@
     <link rel='stylesheet' href='/css/product.css' />
     <link rel='stylesheet' href='/css/forms.css' />
     <link rel='stylesheet' href='/css/cart.css' />
+    <link rel='stylesheet' href='/css/auth.css' />
   </head>
   <body>
     <header class='main-header'>
@@ -17,18 +18,34 @@
           <li class='main-header__item'>
             <a class="{{#if activeProducts}}active{{/if}}" href='/products'>Products</a>
           </li>
-          <li class='main-header__item'>
-            <a class="{{#if activeCart}}active{{/if}}" href='/cart'>Cart</a>
-          </li>
-          <li class='main-header__item'>
-            <a class="{{#if activeOrder}}active{{/if}}" href='/order'>Order</a>
-          </li>
-          <li class='main-header__item'>
-            <a class="{{#if activeAdminProducts}}active{{/if}}" href='/admin/products'>Admin Products</a>
-          </li>
-          <li class='main-header__item'>
-            <a class="{{#if activeAddProduct}}active{{/if}}" href='/admin/add-product'>Add Product</a>
-          </li>
+
+          {{#if isLoggedIn}}
+            <li class='main-header__item'>
+              <a class="{{#if activeCart}}active{{/if}}" href='/cart'>Cart</a>
+            </li>
+            <li class='main-header__item'>
+              <a class="{{#if activeOrder}}active{{/if}}" href='/order'>Order</a>
+            </li>
+            <li class='main-header__item'>
+              <a class="{{#if activeAdminProducts}}active{{/if}}" href='/admin/products'>Admin Products</a>
+            </li>
+            <li class='main-header__item'>
+              <a class="{{#if activeAddProduct}}active{{/if}}" href='/admin/add-product'>Add Product</a>
+            </li>
+          {{/if}}
+        </ul>
+        <ul class='main-header__item-list'>
+          {{#if isLoggedIn}}
+            <li class='main-header__item'>
+              <form action="/logout" method="post">
+                <button class="btn" type="submit">Logout</button>
+              </form>
+            </li>
+          {{else}}
+            <li class='main-header__item'>
+              <a class="{{#if login}}active{{/if}}" href="/login">Login</a>
+            </li>
+          {{/if}}
         </ul>
       </nav>
     </header>

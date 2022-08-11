@@ -1,5 +1,4 @@
 <main>
-  {{#if hasProduct}}
     <div class='grid'>
       {{#each products}}
         <article class='card product-item'>
@@ -14,15 +13,13 @@
             <p class='product__description'>{{desc}}</p>
           </div>
           <div class='card__actions'>
-            <form action='/cart' method='post'>
-              <button class='btn' type='submit'>Add to cart</button>
-              <input type='hidden' name='productId' value={{_id}} />
-            </form>
+            {{#if ../isLoggedIn}}
+              {{> addToCart}}
+            {{/if}}
           </div>
         </article>
+      {{else}}
+        <h1>No Products Found</h1>
       {{/each}}
     </div>
-  {{else}}
-    <h1>No Products Found</h1>
-  {{/if}}
 </main>

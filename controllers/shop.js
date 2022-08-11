@@ -1,17 +1,17 @@
 const Order = require('../models/order');
 const Product = require('../models/product');
 
-exports.getIndex = (_, res) => {
+exports.getIndex = (req, res) => {
   Product.find()
     .lean()
     .then((products) => {
-      if (products)
-        res.render('shop/index', {
-          products,
-          docTitle: 'Shop',
-          hasProduct: products.length > 0,
-          activeShop: true,
-        });
+      res.render('shop/index', {
+        products,
+        docTitle: 'Shop',
+        hasProduct: products.length > 0,
+        activeShop: true,
+        isLoggedIn: req.user ? true : false,
+      });
     });
 };
 
@@ -24,11 +24,12 @@ exports.getProduct = (req, res) => {
         product: product,
         docTitle: product.title,
         activeProducts: true,
+        isLoggedIn: req.user,
       });
     });
 };
 
-exports.getProducts = (_, res) => {
+exports.getProducts = (req, res) => {
   Product.find()
     // .select('title price -_id')
     // .populate('userId', 'name')
@@ -39,11 +40,13 @@ exports.getProducts = (_, res) => {
         docTitle: 'Products',
         hasProduct: products.length > 0,
         activeProducts: true,
+        isLoggedIn: req.user,
       });
     });
 };
 
 exports.getCart = (req, res) => {
+  console.log(req.user);
   req.user.populate('cart.items.productId').then((user) => {
     const products = user.cart.items.map((item) => ({
       ...item.productId._doc,
@@ -56,6 +59,7 @@ exports.getCart = (req, res) => {
       docTitle: 'Your Cart',
       activeCart: true,
       hasProduct: products.length > 0,
+      isLoggedIn: req.user,
     });
   });
 };
@@ -94,6 +98,7 @@ exports.getOrders = (req, res) => {
         docTitle: 'Your Orders',
         activeOrder: true,
         hasOrder: orders.length > 0,
+        isLoggedIn: req.user,
       });
     });
 };
