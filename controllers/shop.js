@@ -10,7 +10,7 @@ exports.getIndex = (req, res) => {
         docTitle: 'Shop',
         hasProduct: products.length > 0,
         activeShop: true,
-        isLoggedIn: req.user ? true : false,
+        csrfToken: req.csrfToken(),
       });
     });
 };
@@ -24,7 +24,6 @@ exports.getProduct = (req, res) => {
         product: product,
         docTitle: product.title,
         activeProducts: true,
-        isLoggedIn: req.user,
       });
     });
 };
@@ -40,13 +39,11 @@ exports.getProducts = (req, res) => {
         docTitle: 'Products',
         hasProduct: products.length > 0,
         activeProducts: true,
-        isLoggedIn: req.user,
       });
     });
 };
 
 exports.getCart = (req, res) => {
-  console.log(req.user);
   req.user.populate('cart.items.productId').then((user) => {
     const products = user.cart.items.map((item) => ({
       ...item.productId._doc,
@@ -59,7 +56,6 @@ exports.getCart = (req, res) => {
       docTitle: 'Your Cart',
       activeCart: true,
       hasProduct: products.length > 0,
-      isLoggedIn: req.user,
     });
   });
 };
@@ -98,7 +94,6 @@ exports.getOrders = (req, res) => {
         docTitle: 'Your Orders',
         activeOrder: true,
         hasOrder: orders.length > 0,
-        isLoggedIn: req.user,
       });
     });
 };
@@ -113,7 +108,7 @@ exports.postOrder = (req, res) => {
       }));
       const order = new Order({
         user: {
-          name: req.user.name,
+          email: req.user.email,
           userId: req.user._id,
         },
         products,

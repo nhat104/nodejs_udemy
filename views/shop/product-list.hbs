@@ -16,7 +16,7 @@
           <div class='card__actions'>
             <a href='/product/{{_id}}' class='btn'>Details</a>
             {{#if ../isLoggedIn}}
-              {{> addToCart}}
+              {{> addToCart csrfToken=@root._locals.csrfToken}}
             {{/if}}
           </div>
         </article>

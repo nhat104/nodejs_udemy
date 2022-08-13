@@ -8,24 +8,9 @@ const order = new Schema({
     },
   ],
   user: {
-    name: { type: String, required: true },
+    email: { type: String, required: true },
     userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
   },
 });
 
 module.exports = model('Order', order);
-
-// const Sequelize = require('sequelize');
-
-// const sequelize = require('../utils/database');
-
-// const Order = sequelize.define('order', {
-//   id: {
-//     type: Sequelize.INTEGER,
-//     autoIncrement: true,
-//     allowNull: false,
-//     primaryKey: true,
-//   },
-// });
-
-// module.exports = Order;

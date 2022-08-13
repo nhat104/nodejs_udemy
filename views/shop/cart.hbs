@@ -7,6 +7,7 @@
           <h2>Quantity: {{quantity}}</h2>
           <form action='/cart-delete-item' method='post'>
             <input type='hidden' name='productId' value='{{_id}}' />
+            <input type='hidden' name='_csrf' value={{@root._locals.csrfToken}} />
             <button type='submit' class='btn danger'>Delete</button>
           </form>
         </li>
@@ -15,6 +16,7 @@
     <hr />
     <div class='centered'>
       <form action='/create-order' method='post'>
+        <input type='hidden' name='_csrf' value={{csrfToken}} />
         <button type='submit' class='btn'>Order Now</button>
       </form>
     </div>
